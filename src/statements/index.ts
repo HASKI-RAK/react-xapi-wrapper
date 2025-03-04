@@ -1,0 +1,6 @@
+export * from './getActor'
+export * from './getContext'
+export * from './getContextActivities'
+export * from './getObject'
+export * from './getStatement'
+export * from './getVerb'
