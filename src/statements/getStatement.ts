@@ -1,6 +1,10 @@
 import { Statement } from '@xapi/xapi'
-import {getActor, getContext, getContextActivities, getObject, getVerb} from '.'
 import { XAPIRepositories } from '../setup/setupXAPI'
+import { getActor } from './getActor'
+import { getContext } from './getContext'
+import { getContextActivities } from './getContextActivities'
+import { getObject } from './getObject'
+import { getVerb } from './getVerb'
 
 /*
 TODO: Comment

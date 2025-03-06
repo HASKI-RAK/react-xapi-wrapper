@@ -63,7 +63,7 @@ export const useXAPI = (params?: XAPIHookParams): XAPIHookReturn => {
 
       console.log(getStatement(statement)) // TODO: Remove
 
-      xAPI.sendStatement({ statement: getStatement(statement) }).catch((error) => {
+      xAPI.sendStatement({ statement: getStatement(statement) }).catch((error: string) => {
         onError(error)
       })
     },

@@ -1,4 +1,4 @@
-import { ChangeEvent, ComponentType, forwardRef, MouseEvent, PropsWithoutRef, Ref, useCallback, useMemo } from 'react'
+import { ChangeEvent, ComponentType, forwardRef, MouseEvent, ReactElement, Ref, useCallback, useMemo } from 'react'
 import { XAPIComponentProps, useXAPI } from './useXAPI'
 
 // TODO: Document this type
@@ -11,11 +11,11 @@ export type EventHandlers = {
 
 // TODO: Document this HOC
 export const withXAPI = <P extends object>(
-  WrappedComponent: ComponentType<P & EventHandlers>,
+  WrappedComponent: ComponentType<P & EventHandlers & {ref?: Ref<unknown>}>,
   { componentFilePath, componentType, pageName }: XAPIComponentProps
 ) => {
   // Create a new component that wraps the given component enhancing the event handlers with the ability to send xAPI statements.
-  const XAPIEnhancedComponent = forwardRef<unknown, P & EventHandlers>((props: PropsWithoutRef<P & EventHandlers>, ref: Ref<unknown>) => { //HTMLDivElement
+  const XAPIEnhancedComponent = forwardRef<unknown, P & EventHandlers>((props: P & EventHandlers, ref: Ref<unknown>): ReactElement => {
     // Extract the event handlers from the props.
     
     const { id, onClick, onChange, onClose, ...rest } = props
