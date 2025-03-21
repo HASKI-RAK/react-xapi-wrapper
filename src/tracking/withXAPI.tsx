@@ -4,9 +4,9 @@ import { XAPIComponentProps, useXAPI } from './useXAPI'
 // TODO: Document this type
 export type EventHandlers = {
   id?: string
-  onClick?: (e: MouseEvent) => void
-  onChange?: (e: ChangeEvent<HTMLInputElement>) => void
-  onClose?: (e: MouseEvent) => void
+  onClick?: (e: MouseEvent<HTMLButtonElement>) => void // TODO: Test with HTMLElement, Element or unknown
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void // TODO: SelectChangeEvent<> mit unknown??
+  onClose?:  (event: object, reason: string) => void
 }
 
 // TODO: Document this HOC
@@ -32,12 +32,13 @@ export const withXAPI = <P extends object>(
 
     // Enhance the onClick event handler
     const handleClick = useCallback(
-      (e: MouseEvent) => {
+      (e: MouseEvent<HTMLButtonElement>) => {
         sendStatement('clicked')
         onClick?.(e)
       },
       [onClick, sendStatement]
     )
+
 
     // Enhance the onChange event handler.
     const handleChange = useCallback(
@@ -49,10 +50,9 @@ export const withXAPI = <P extends object>(
     )
 
     // Enhance the onClose event handler.
-    const handleClose = useCallback(
-      (e: MouseEvent) => {
+    const handleClose = useCallback((event: object, reason: string) => {
         sendStatement('closed')
-        onClose?.(e)
+        onClose?.(event, reason)
       },
       [onClose, sendStatement]
     )

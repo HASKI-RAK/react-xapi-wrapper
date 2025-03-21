@@ -3,7 +3,7 @@ import { XAPIContext } from '../setup/XAPIProvider'
 import { StatementProps, getStatement } from '../statements/getStatement'
 
 // TODO: Document this type
-export type XAPIVerb = 'clicked' | 'closed' | 'changed' | 'moved' // ? pressed, stroked oder doch clicked?
+export type XAPIVerb = 'clicked' | 'closed' | 'changed' | 'mouseMoved' | 'keyPressed'
 
 // TODO Document this type
 export type XAPIComponentProps = {

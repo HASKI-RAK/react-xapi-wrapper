@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState, memo } from 'react'
 import { XAPIComponentProps, useXAPI } from './useXAPI'
 
 // TODO: Document this component
@@ -20,9 +20,8 @@ const UserInteractionTracker = ({ componentFilePath, componentType, pageName }: 
   const handleMouseMove = useCallback(() => {
     const now = Date.now()
 
-    if (now - lastMouseMove > 3000) {
-      // TODO: Set to 30000.
-      sendStatement('moved')
+    if (now - lastMouseMove > 30000) {
+      sendStatement('mouseMoved')
       setLastMouseMove(now)
     }
   }, [lastMouseMove, setLastMouseMove, sendStatement])
@@ -31,9 +30,8 @@ const UserInteractionTracker = ({ componentFilePath, componentType, pageName }: 
   const handleKeyStroke = useCallback(() => {
     const now = Date.now()
 
-    if (now - lastKeyStroke > 1000) {
-      // TODO: Set to 100000.
-      sendStatement('changed')
+    if (now - lastKeyStroke > 100000) {
+      sendStatement('keyPressed')
       setLastKeyStroke(now)
     }
   }, [lastKeyStroke, setLastKeyStroke, sendStatement])
@@ -52,4 +50,4 @@ const UserInteractionTracker = ({ componentFilePath, componentType, pageName }: 
   return null
 }
 
-export default UserInteractionTracker
+export default memo(UserInteractionTracker)
