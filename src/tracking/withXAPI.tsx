@@ -1,16 +1,16 @@
-import { ChangeEvent, ComponentType, forwardRef, MouseEvent, ReactElement, Ref, useCallback, useMemo } from 'react'
+import { ComponentType, forwardRef, ReactElement, Ref, useCallback, useMemo } from 'react'
 import { XAPIComponentProps, useXAPI } from './useXAPI'
 
 // TODO: Document this type
 export type EventHandlers = {
   id?: string
-  onClick?: (e: MouseEvent<HTMLButtonElement>) => void // TODO: Test with HTMLElement, Element or unknown
-  onChange?: (e: ChangeEvent<HTMLInputElement>) => void // TODO: SelectChangeEvent<> mit unknown??
-  onClose?:  (event: object, reason: string) => void
+  onClick?: (...args: any[]) => void // ✅
+  onChange?: (...args: any[]) => void
+  onClose?:  (...args: any[]) => void // ✅
 }
 
 // TODO: Document this HOC
-export const withXAPI = <P extends object>(
+export const withXAPI = <P extends object, T extends (...args: any[]) => void>(
   WrappedComponent: ComponentType<P & EventHandlers & {ref?: Ref<unknown>}>,
   { componentFilePath, componentType, pageName }: XAPIComponentProps
 ) => {
@@ -20,7 +20,7 @@ export const withXAPI = <P extends object>(
     
     const { id, onClick, onChange, onClose, ...rest } = props
 
-    const xAPIProps = useMemo(() => ({
+    const xAPIProps = useMemo(() => ({ 
       componentID: id,
       componentFilePath,
       componentType,
@@ -32,27 +32,31 @@ export const withXAPI = <P extends object>(
 
     // Enhance the onClick event handler
     const handleClick = useCallback(
-      (e: MouseEvent<HTMLButtonElement>) => {
+      (...args: any[]) => {
         sendStatement('clicked')
-        onClick?.(e)
+        onClick?.(...args)
       },
       [onClick, sendStatement]
     )
 
-
     // Enhance the onChange event handler.
-    const handleChange = useCallback(
-      (e: ChangeEvent<HTMLInputElement>) => {
-        sendStatement('changed')
-        onChange?.(e)
-      },
-      [onChange, sendStatement]
-    )
+    // function handleChange(e: ChangeEvent<HTMLInputElement>): void
+    // function handleChange(e: MouseEvent<HTMLElement>, value: unknown): void
+    // function handleChange(e: ChangeEvent<HTMLInputElement> | MouseEvent<HTMLElement>, value?: unknown): void {
+    //   sendStatement('changed')
+    //   onChange?.(e, value)
+    // }
+    const handleChange = useCallback((...args: any[]) => {
+      sendStatement('changed')
+      if (onChange) {
+        onChange?.(...args)
+      }
+    }, [onChange, sendStatement])
 
     // Enhance the onClose event handler.
-    const handleClose = useCallback((event: object, reason: string) => {
+    const handleClose = useCallback((...args: any[]) => {
         sendStatement('closed')
-        onClose?.(event, reason)
+        onClose?.(...args)
       },
       [onClose, sendStatement]
     )

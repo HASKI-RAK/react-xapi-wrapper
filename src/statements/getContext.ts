@@ -63,3 +63,4 @@ export const getContext = ({
       }
     }
 }
+// TODO: Remove version without the contextActivities property.

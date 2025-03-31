@@ -13,6 +13,7 @@
   "license": "MIT",
   "author": "Julian Manz",
   "main": "dist/index.cjs.js",
+  "type": "module",
   "module": "dist/index.esm.js",
   "types": "dist/types/index.d.ts",
   "files": [
@@ -23,8 +24,7 @@
     "watch": "rollup -c --watch"
   },
   "peerDependencies": {
-    "@types/react": "^19.0.10",
-    "react": "^19.0.0"
+    "react": "^18.0.0"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^28.0.2",

@@ -30,5 +30,7 @@ export default {
     }),
     terser(),
   ],
-  external: ['react', 'react-dom'],
-};
+  external: (id) => {
+    return ['react', 'react-dom'].includes(id) || id.startsWith('react/')
+  }
+};  
