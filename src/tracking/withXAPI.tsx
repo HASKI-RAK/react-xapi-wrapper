@@ -4,21 +4,21 @@ import { XAPIComponentProps, useXAPI } from './useXAPI'
 // TODO: Document this type
 export type EventHandlers = {
   id?: string
-  onClick?: (...args: any[]) => void // ✅
+  onClick?: (...args: any[]) => void
   onChange?: (...args: any[]) => void
-  onClose?:  (...args: any[]) => void // ✅
+  onClose?:  (...args: any[]) => void
+  pageName?: string
 }
 
 // TODO: Document this HOC
-export const withXAPI = <P extends object, T extends (...args: any[]) => void>(
+export const withXAPI = <P extends object>(
   WrappedComponent: ComponentType<P & EventHandlers & {ref?: Ref<unknown>}>,
-  { componentFilePath, componentType, pageName }: XAPIComponentProps
+  { componentFilePath, componentType }: XAPIComponentProps
 ) => {
   // Create a new component that wraps the given component enhancing the event handlers with the ability to send xAPI statements.
   const XAPIEnhancedComponent = forwardRef<unknown, P & EventHandlers>((props: P & EventHandlers, ref: Ref<unknown>): ReactElement => {
     // Extract the event handlers from the props.
-    
-    const { id, onClick, onChange, onClose, ...rest } = props
+    const { id, onClick, onChange, onClose, pageName, ...rest } = props
 
     const xAPIProps = useMemo(() => ({ 
       componentID: id,
@@ -39,18 +39,10 @@ export const withXAPI = <P extends object, T extends (...args: any[]) => void>(
       [onClick, sendStatement]
     )
 
-    // Enhance the onChange event handler.
-    // function handleChange(e: ChangeEvent<HTMLInputElement>): void
-    // function handleChange(e: MouseEvent<HTMLElement>, value: unknown): void
-    // function handleChange(e: ChangeEvent<HTMLInputElement> | MouseEvent<HTMLElement>, value?: unknown): void {
-    //   sendStatement('changed')
-    //   onChange?.(e, value)
-    // }
+    // TODO: Document this function
     const handleChange = useCallback((...args: any[]) => {
       sendStatement('changed')
-      if (onChange) {
-        onChange?.(...args)
-      }
+      onChange?.(...args)
     }, [onChange, sendStatement])
 
     // Enhance the onClose event handler.

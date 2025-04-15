@@ -4,8 +4,8 @@ import { XAPIComponentProps, useXAPI } from './useXAPI'
 // TODO: Document this component
 const UserInteractionTracker = ({ componentFilePath, componentType, pageName }: XAPIComponentProps) => {
   // States.
-  const [lastKeyStroke, setLastKeyStroke] = useState<number>(Date.now())
-  const [lastMouseMove, setLastMouseMove] = useState<number>(Date.now())
+  const [lastKeyStroke, setLastKeyStroke] = useState<number>(0)
+  const [lastMouseMove, setLastMouseMove] = useState<number>(0)
 
   // Hook.
   // TODO

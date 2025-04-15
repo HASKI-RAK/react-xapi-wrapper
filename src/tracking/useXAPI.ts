@@ -30,7 +30,7 @@ export const useXAPI = (params?: XAPIHookParams): XAPIHookReturn => {
   const xAPIContext = useContext(XAPIContext)
 
   // Resolve the page name.
-  const resolvedPageName = useMemo(() => pageName ?? window.location.pathname.split('/').pop() ?? '', [pageName])
+  const resolvedPageName = useMemo(() => pageName ?? window.location.pathname.split('/').filter(Boolean).pop() ?? '', [pageName])
 
   // Function to send a statement.
   const sendStatement = useCallback(

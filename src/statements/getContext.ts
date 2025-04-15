@@ -32,7 +32,7 @@ export const getContext = ({
   contextActivities,
   domainVersion,
   filePath,
-  gitHub,
+  gitHub, // TODO: Rename to projectURL
   language = navigator.language
 }: ContextProps): Context => {
   if (contextActivities)
@@ -63,4 +63,3 @@ export const getContext = ({
       }
     }
 }
-// TODO: Remove version without the contextActivities property.
