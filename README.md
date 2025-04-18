@@ -12,14 +12,17 @@ Based on the [xAPI.js](https://github.com/xapijs/xapi) library, `react-xapi-wrap
 
 ## Contents
 To generate and dispatch xAPI statements, the library provides the following four main components and functions:
-    - `setupXAPI()`: Function used to create an xAPI object containing the information required to create and send xAPI statements.
-    - `UserInteractionTracker`: A component that tracks user interactions such as mouse movement and keystrokes. 
-    - `withXAPI()`: A higher-order function that enhances components with automatic xAPI tracking.
-    - `XAPIProvider`: A context provider that makes the xAPI object available to all xAPI-enhanced components within the application.
+ - `setupXAPI()`: Function used to create an xAPI object containing the information required to create and send xAPI statements.
+ - `UserInteractionTracker`: A component that tracks user interactions such as mouse movement and keystrokes. 
+ - `withXAPI()`: A higher-order function that enhances components with automatic xAPI tracking.
+ - `XAPIProvider`: A context provider that makes the xAPI object available to all xAPI-enhanced components within the application.
 
 ## Setup
 1. Install this library via [npm](https://www.npmjs.com/package/react-xapi-wrapper) or [yarn](https://classic.yarnpkg.com/en/package/react-xapi-wrapper):
-`npm install react-xapi-wrapper` or `yarn add react-xapi-wrapper`
+```typescript
+npm install react-xapi-wrapper
+// or 
+yarn add react-xapi-wrapper
 ```
 2. Initialize the `XAPIProvider` with an xAPI object created using `setupXAPI()`. Components must be rendered within this provider to collect xAPI statements.
 ```typescript
@@ -66,4 +69,4 @@ export default Button
 ```
 
 ## Development
-The project can be built by cloning the repository and running `yarn build` to create a `dist/`-folder containing the output. All tests are written using `jest`, with 100% coverage on statements, branches, functions, and lines. They can be run using: `yarn test`. Further documentation is provided via `TSDoc` comments in the source code.
+The project can be built by cloning the repository and running ` yarn build ` to create a `dist/` folder containing the output. All tests are written using `jest`, with 100% coverage on statements, branches, functions, and lines. They can be run using: ` yarn test `. Further documentation is provided via `TSDoc` comments in the source code.
