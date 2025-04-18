@@ -1,28 +1,27 @@
 import { Verb } from '@xapi/xapi'
 
-//TODO: Comment
+/**
+ * The type definition of VerbProps.
+ * Used to define the structure of the props for the getVerb function.
+ */
 export type VerbProps = {
-  verb: string
+  verbName: string
   repository: string
 }
 
 /**
- * getVerb function.
- *TODO
- * @param verb - The verb of the xAPI statement.
+ * The getVerb function.
+ * Creates the verb part of an xAPI statement.
  *
- * @remarks
- * getVerb presents a function that can be used to get the verb part of an xAPI statement.
- *
- * @returns - The verb part of an xAPI statement.
- *
- * @category Services
+ * @param verbName - The name of the verb.
+ * @param repository - The URL to the verb repository.
+ * @returns A new instance of the verb part of an xAPI statement.
  */
-export const getVerb = ({ verb, repository }: VerbProps): Verb => {
+export const getVerb = ({ verbName, repository }: VerbProps): Verb => {
   return {
-    id: repository.concat(verb),
+    id: repository.concat(verbName),
     display: {
-      en: verb
-    }
+      en: verbName,
+    },
   }
 }

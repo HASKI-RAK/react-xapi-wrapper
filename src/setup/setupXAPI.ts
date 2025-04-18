@@ -1,7 +1,10 @@
 import BaseXAPI from '@xapi/xapi'
 import { Versions } from '@xapi/xapi/dist/types/constants'
 
-// TODO: Document the type
+/**
+ * The type definition of XAPIRepositories.
+ * Used to define the structure of the repositories object in the XAPIConfig type.
+ */
 export type XAPIRepositories =
   | {
       component: string
@@ -10,7 +13,10 @@ export type XAPIRepositories =
     }
   | string
 
-// TODO: Document the type
+/**
+ * The type definition of XAPIConfig.
+ * Used to define the structure of the configuration object for the XAPI instance.
+ */
 export type XAPIConfig = {
   currentLanguage?: string
   onError?: (error: string) => void
@@ -20,10 +26,20 @@ export type XAPIConfig = {
   userID?: string
 }
 
-// TODO: Document the type
+/**
+ * The type definition of XAPI.
+ * Extends the XAPIConfig type to include an instance of BaseXAPI.
+ */
 export type XAPI = XAPIConfig & { xAPI: BaseXAPI }
 
-// TODO: Document the function
+/**
+ * The setupXAPI function.
+ * Creates a new instance of XAPI with the given configuration.
+ *
+ * @param xAPI - The xAPI configuration object.
+ * @param props - Additional properties to be passed to the XAPI instance.
+ * @returns A new instance of XAPI with the given configuration.
+ */
 export const setupXAPI = ({
   xAPI,
   ...props
@@ -36,9 +52,12 @@ export const setupXAPI = ({
 }): XAPI => ({
   ...props,
   xAPI: new BaseXAPI({
-    auth: typeof xAPI.auth === 'string' ? xAPI.auth : BaseXAPI.toBasicAuth(xAPI.auth.username, xAPI.auth.password),
+    auth:
+      typeof xAPI.auth === 'string'
+        ? xAPI.auth
+        : BaseXAPI.toBasicAuth(xAPI.auth.username, xAPI.auth.password),
     endpoint: xAPI.endpoint,
     version: xAPI.version,
-    adapter: 'fetch'
-  })
+    adapter: 'fetch',
+  }),
 })

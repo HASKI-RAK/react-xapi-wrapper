@@ -1,6 +1,9 @@
 import { Context, ContextActivity } from '@xapi/xapi'
 
-// TODO
+/**
+ * The type definition of ContextProps.
+ * Used to define the structure of the props for the getContext function.
+ */
 export type ContextProps = {
   contextActivities?: {
     parent?: ContextActivity[]
@@ -8,58 +11,41 @@ export type ContextProps = {
     category?: ContextActivity[]
     her?: ContextActivity[]
   }
-  domainVersion: string
-  filePath: string
-  gitHub: string
-  language?: string
+  currentLanguage?: string
+  componentFilePath: string
+  projectURL: string
+  projectVersion: string
 }
 
 /**
- * getContext function.
- *TODO
- * @param path - The path of the parent page.
- * @param getEnglishName - The function to translate a page name to english.
- * @param filePath - The file path of the component that sends an xAPI statement.
+ * The getContext function.
+ * Creates the context part of an xAPI statement.
  *
- * @remarks
- * getContext presents a function that can be used to get the context part of an xAPI statement.
- *
- * @returns - The context part of an xAPI statement.
- *
- * @category Services
+ * @param componentFilePath - The file path of the component.
+ * @param contextActivities - The context activities part of the xAPI statement.
+ * @param currentLanguage - The language currently set by the user.
+ * @param projectURL - The URL of the project on GitHub.
+ * @param projectVersion - The current version of the project.
+ * @returns A new instance of the context part of an xAPI statement.
  */
 export const getContext = ({
+  componentFilePath,
   contextActivities,
-  domainVersion,
-  filePath,
-  gitHub, // TODO: Rename to projectURL
-  language = navigator.language
+  currentLanguage = navigator.language,
+  projectURL,
+  projectVersion,
 }: ContextProps): Context => {
-  if (contextActivities)
-    return {
-      platform: 'Frontend',
-      language: language,
-      extensions: {
-        'https://lrs.learninglocker.net/define/extensions/info': {
-          domain: window.location.origin,
-          domain_version: domainVersion,
-          github: gitHub,
-          event_function: `src${filePath}`
-        }
+  return {
+    platform: 'Frontend',
+    language: currentLanguage,
+    extensions: {
+      'https://lrs.learninglocker.net/define/extensions/info': {
+        domain: window.location.origin,
+        domain_version: projectVersion,
+        github: projectURL,
+        event_function: `src${componentFilePath}`,
       },
-      contextActivities: contextActivities
-    }
-  else
-    return {
-      platform: 'Frontend',
-      language: language,
-      extensions: {
-        'https://lrs.learninglocker.net/define/extensions/info': {
-          domain: window.location.origin,
-          domain_version: domainVersion,
-          github: gitHub,
-          event_function: `src${filePath}`
-        }
-      }
-    }
+    },
+    contextActivities: contextActivities,
+  }
 }

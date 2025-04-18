@@ -1,33 +1,36 @@
 import { StatementObject } from '@xapi/xapi'
 
-// TODO
+/**
+ * The type definition of ObjectProps.
+ * Used to define the structure of the props for the getObject function.
+ */
 export type ObjectProps = {
-  component: string
   componentID: string
+  componentType: string
   repository: string
 }
 
 /**
- * getObject function.
- *TODO
- * @param componentURL - The URL of the component.
- * @param component - The name of the component.
+ * The getObject function.
+ * Creates the object part of an xAPI statement.
  *
- * @remarks
- * getObject presents a function that can be used to get the object part of an xAPI statement.
- *
- * @returns - The object part of an xAPI statement.
- *
- * @category Services
+ * @param componentID - The ID of the component.
+ * @param componentType - The type of the component.
+ * @param repository - The URL to the component repository.
+ * @returns A new instance of the object part of an xAPI statement.
  */
-export const getObject = ({ component, componentID, repository }: ObjectProps): StatementObject => {
+export const getObject = ({
+  componentID,
+  componentType,
+  repository,
+}: ObjectProps): StatementObject => {
   return {
     id: window.location.href.concat('#' + componentID),
     definition: {
       name: {
-        en: component
+        en: componentType,
       },
-      type: repository.concat(component)
-    }
+      type: repository.concat(componentType),
+    },
   }
 }

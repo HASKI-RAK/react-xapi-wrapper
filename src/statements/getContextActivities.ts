@@ -1,47 +1,42 @@
 import { Context, ContextActivity } from '@xapi/xapi'
 
-// TODO
+/**
+ * The type definition of ContextActivityProps.
+ * Used to define the structure of the props for the getParent and getContextActivities functions.
+ */
 export type ContextActivityProps = {
-  page: string
+  pageName: string
   repository: string
 }
 
 /**
- * getParent function.
- *TODO
- * @param path - The path of the parent page.
- * @param getEnglishName - The function to translate a page name to english.
+ * The getParent function.
+ * Creates the parent part of an xAPI statement.
  *
- * @remarks
- * getParent presents a function that can be used to get the parent part of an xAPI statement.
- *
- * @returns - The parent part of an xAPI statement.
- *
- * @category Services
+ * @param pageName - The name of the page.
+ * @param repository - The URL to the page repository.
+ * @returns A new instance of the parent part of an xAPI statement.
  */
-export const getParent = ({ page, repository }: ContextActivityProps): ContextActivity[] => {
+export const getParent = ({ pageName, repository }: ContextActivityProps): ContextActivity[] => {
   return [
     {
       id: window.location.href,
       definition: {
-        type: `${repository}${page}`,
+        type: `${repository}${pageName}`,
         name: {
-          en: page
-        }
-      }
-    }
+          en: pageName,
+        },
+      },
+    },
   ]
 }
 
 /**
- * getGrouping function.
- *TODO
- * @remarks
- * getGrouping presents a function that can be used to get the grouping part of an xAPI statement.
+ * The getGrouping function.
+ * Creates the grouping part of an xAPI statement.
  *
- * @returns - The grouping part of an xAPI statement.
- *
- * @category Services
+ * @param repository - The URL to the page repository.
+ * @returns A new instance of the grouping part of an xAPI statement.
  */
 export const getGrouping = (repository: ContextActivityProps['repository']): ContextActivity[] => {
   return [
@@ -50,35 +45,33 @@ export const getGrouping = (repository: ContextActivityProps['repository']): Con
       definition: {
         type: `${repository}Home`,
         name: {
-          en: 'Home'
-        }
-      }
-    }
+          en: 'Home',
+        },
+      },
+    },
   ]
 }
 
 /**
- * getContextActivities function.
- *TODO
- * @param path - The path of the parent page.
- * @param getEnglishName - The function to translate a page name to english.
+ * The getContextActivities function.
+ * Creates the contextActivities part of an xAPI statement.
  *
- * @remarks
- * getContextActivities presents a function that can be used to get the contextActivities part of an xAPI statement.
- *
- * @returns - The contextActivities part of an xAPI statement.
- *
- * @category Services
+ * @param pageName - The name of the page.
+ * @param repository - The URL to the page repository.
+ * @returns A new instance of the contextActivities part of an xAPI statement.
  */
-export const getContextActivities = ({ page, repository }: ContextActivityProps): Context['contextActivities'] => {
+export const getContextActivities = ({
+  pageName,
+  repository,
+}: ContextActivityProps): Context['contextActivities'] => {
   if (window.location.pathname === '/') {
     return {
-      parent: getGrouping(repository)
+      parent: getGrouping(repository),
     }
   } else {
     return {
-      parent: getParent({ page, repository }),
-      grouping: getGrouping(repository)
+      parent: getParent({ pageName, repository }),
+      grouping: getGrouping(repository),
     }
   }
 }

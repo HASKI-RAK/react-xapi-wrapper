@@ -1,27 +1,25 @@
 import { Actor } from '@xapi/xapi'
 
-//TODO: DOKU
+/**
+ * The type definition of ActorProps.
+ * Used to define the structure of the props for the getActor function.
+ */
 export type ActorProps = {
   userID: string
 }
 
 /**
- * getActor function.
- *TODO
- * @param lmsUserID - The LMS user ID of the current user.
+ * The getActor function.
+ * Creates the actor part of an xAPI statement.
  *
- * @remarks
- * getActor presents a function that can be used to get the actor part of an xAPI statement.
- *
- * @returns - The actor part of an xAPI statement.
- *
- * @category Services
+ * @param userID - The ID of the current user.
+ * @returns A new instance of the actor part of an xAPI statement.
  */
 export const getActor = ({ userID }: ActorProps): Actor => {
   return {
     account: {
       homePage: window.location.origin,
-      name: userID
-    }
+      name: userID,
+    },
   }
 }

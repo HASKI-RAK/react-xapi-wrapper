@@ -1,19 +1,30 @@
 import { useCallback, useEffect, useState, memo } from 'react'
 import { XAPIComponentProps, useXAPI } from './useXAPI'
 
-// TODO: Document this component
-const UserInteractionTracker = ({ componentFilePath, componentType, pageName }: XAPIComponentProps) => {
-  // States.
+/**
+ * The UserInteractionTracker component.
+ * Used to track user interactions such as mouse movements and key presses.
+ *
+ * @param componentFilePath - The file path of the component.
+ * @param componentType - The type of the component.
+ * @param pageName - The name of the page.
+ * @returns A new instance of the UserInteractionTracker component.
+ */
+const UserInteractionTracker = ({
+  componentFilePath,
+  componentType,
+  pageName,
+}: XAPIComponentProps) => {
+  // Initialize state variables to track the user interactions.
   const [lastKeyStroke, setLastKeyStroke] = useState<number>(0)
   const [lastMouseMove, setLastMouseMove] = useState<number>(0)
 
-  // Hook.
-  // TODO
+  // Retrieve the sendStatement function from the useXAPI hook.
   const { sendStatement } = useXAPI({
-    componentID: 'user-interaction-tracker',
     componentFilePath,
+    componentID: 'user-interaction-tracker',
     componentType,
-    pageName
+    pageName,
   })
 
   // Sent statement on mouse move every 30 seconds.
@@ -26,7 +37,7 @@ const UserInteractionTracker = ({ componentFilePath, componentType, pageName }: 
     }
   }, [lastMouseMove, setLastMouseMove, sendStatement])
 
-  // Sent statement on key stroke every 1 minute.
+  // Sent statement on key stroke every minute.
   const handleKeyStroke = useCallback(() => {
     const now = Date.now()
 
