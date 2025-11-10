@@ -11,7 +11,7 @@
 
 ## General Information
 
-Based on the [xAPI.js](https://github.com/xapijs/xapi) library, `react-xapi-wrapper` simplifies xAPI integration in React applications by overwriting event handlers to automatically collect xAPI statements. Its usage within an adaptive learning system for software engineering can be seen in [HASKI-Frontend](https://github.com/HASKI-RAK/HASKI-Frontend). A paper describing this approach is also published on [ACM](not yet available).
+Based on the [xAPI.js](https://github.com/xapijs/xapi) library, `react-xapi-wrapper` simplifies xAPI integration in React applications by overwriting event handlers to automatically collect xAPI statements. Its usage within an adaptive learning system for software engineering can be seen in [HASKI-Frontend](https://github.com/HASKI-RAK/HASKI-Frontend). A paper describing this approach is also published on [ACM](https://doi.org/10.1145/3723010.3723020).
 
 ## Contents
 
