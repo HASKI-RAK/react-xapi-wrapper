@@ -43,7 +43,7 @@ export const getContext = ({
         domain: window.location.origin,
         domain_version: projectVersion,
         github: projectURL,
-        event_function: `src${componentFilePath}`,
+        event_function: componentFilePath.startsWith('src') ? componentFilePath : `src${componentFilePath}`,
       },
     },
     contextActivities: contextActivities,
